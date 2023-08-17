@@ -41,63 +41,91 @@ On Azure, I set up two virtual machines: one with Windows Server 2022 (designate
 </p>
 <br />
 
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/77736aee-f097-47e4-add7-e266b361896e)
+
+
 <p>
-<img src="https://i.imgur.com/YvrBTgj.png" height="70%" width="70%"/>
+
+</p>
+
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/b6ca6290-51e5-4b0a-8e04-172d8a04aba2)
+
+<p>
+
+</p>
+
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/9f2ae63b-0c45-46c2-a9d2-455774cc4127)
+
+<p>
+
 </p>
 <p>
-<img src="https://i.imgur.com/ym3Ld63.png" height="70%" width="70%"/>
-</p>
-<p>
-<img src="https://i.imgur.com/LccuYWf.png" height="70%" width="70%"/>
-</p>
-<p>
-After connecting to both VMs using Remote Desktop, I initiated a perpetual ping from the Client to the DC to ensure connectivity. The requests were timing out, so I opened Windows Defender Firewall in the DC and enabled Core Networking Diagnostics (ICMPv4 protocol). This allowed the DC to reply to the requests as shown in the command-line interface (CLI).
+After connecting to the VMs via Remote Desktop, I began a continuous ping from the Client to the DC to validate connectivity. As the ping requests were not receiving responses, I accessed the Windows Defender Firewall on the DC. Enabling Core Networking Diagnostics for the ICMPv4 protocol within the firewall settings allowed the DC to respond to the ping requests, which were then visible in the command-line interface (CLI).
 </p>
 <br />
 
+
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/9ec14bf1-c013-4020-a1cc-eb073636fc5b)
+
 <p>
-<img src="https://i.imgur.com/AayPHkb.png" height="70%" width="70%"/>
+
 </p>
 <p>
-<img src="https://i.imgur.com/XqzeZYs.png" height="70%" width="70%"/>
+
 </p>
 <p>
 In the DC, I installed Active Directory Domain Services (AD DS) from the Server Manager Dashboard. Once AD DS was installed, I promoted the machine to a Domain Controller so that it could manage devices and accounts on the domain.
 </p>
 <br />
 
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/5ea912e7-2f5b-48ec-a61c-9ec5b81015ce)
+
 <p>
-<img src="https://i.imgur.com/jbCeryh.png" height="70%" width="70%"/>
+
+
 </p>
 <p>
 Now that Active Directory was all set up, I added two organizational units (OU) and a user. The OUs were _ADMINS and _EMPLOYEES, and the new user was “Jane Doe.” Jane was going to be an administrator, so I created her account inside the _ADMINS OU and added her as a member of Domain Admins. I logged out of the default account that I started with and logged back in as Jane.
 </p>
 <br />
 
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/29ad3161-7c2b-4aaf-9647-c3a7c96bd6e4)
+
+
 <p>
-<img src="https://i.imgur.com/afGXoqY.png" height="70%" width="70%"/>
+  
 </p>
+
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/529b5a70-ec45-491d-a0dd-900307ac6bcb)
+
 <p>
-<img src="https://i.imgur.com/31ZSBHk.png" height="70%" width="70%"/>
+
 </p>
 <p>
 To continue with setting up my domain, I went back to Azure and set the DC’s private IP address as the DNS server for the Client. After this, I was able to join the Client to my domain. This was confirmed by the “Welcome” box that popped up, confirming that the Client was now part of the domain.
 </p>
 <br />
 
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/6a11d2cb-6c9b-4469-95d4-f74ce6090f5b)
+
+
 <p>
-<img src="https://i.imgur.com/EWzPnOh.png" height="70%" width="70%"/>
+
 </p>
 <p>
 I enabled Domain Users to user Remote Desktop to access the Client. Remote Desktop is the only way to log into the VM, so enabling this for Domain Users would allow for any user accounts in the domain to be able to log into this machine.
 </p>
 <br />
 
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/9927ed73-7578-421c-89bb-6129fe1338e6)
+
 <p>
-<img src="https://i.imgur.com/lzUMtp1.png" height="70%" width="70%"/>
+
+![image](https://github.com/jtowns14/configure-ad/assets/139197948/fe906173-fcbd-4231-9daf-0dfafa2e9c43)
+
 </p>
 <p>
-<img src="https://i.imgur.com/WF5lwhY.png" height="70%" width="70%"/>
+
 </p>
 <p>
 Lastly, I created 10,000 user accounts using a PowerShell script. All of the accounts were placed into the _EMPLOYEES OU, so I selected a random account and used it to log into the Client. I used the commands “hostname” and “whoami” in the command-line, which confirmed that this was successful.
